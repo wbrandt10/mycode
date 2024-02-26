@@ -1,0 +1,20 @@
+---
+- name: bootstrapping and new user
+  hosts: raiders
+  connection: ssh
+  gather_facts: false
+
+  tasks:
+
+  - name: remove a user
+    ansible.builtin.user:
+     name: exampleuser
+     state: absent
+     remove: yes
+    become: true
+
+  - name: Remove the group sandbox
+    ansible.builtin.group:
+      name: sandbox
+      state: absent
+    become: true
