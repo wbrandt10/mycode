@@ -1,0 +1,18 @@
+---
+- name: Exploring line in file
+  hosts: planetexpress
+  gather_facts: true
+  connection: ssh
+
+  vars:
+  - bootstrap: "/var/log/bootstrap.log"
+
+  tasks:
+  - name: "Insert a line into {{ bootstrap }}"
+    lineinfile:
+      path: "{{ bootstrap }}"
+      regexp: "^Setting up lib.*"
+      line: "REDACTED BY ANSIBLE lineinfile module"
+      backup: yes
+    become: true
+    when: ansible_os_family == "Debian"

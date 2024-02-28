@@ -1,0 +1,18 @@
+---
+- name: Exploring replace
+  hosts: planetexpress
+  gather_facts: true
+  connection: ssh
+
+  vars:
+  - bootstrap: "/var/log/bootstrap.log"
+
+  tasks:
+  - name: "Insert a line int {{ bootstrap }}"
+    replace:
+      path: "{{ bootstrap }}"
+      regexp: "^Setting up lib.*"
+      replace: "REDACTED BY ANSIBLE replace module"
+      backup: yes
+    become: true
+    when: ansible_os_family == "Debian"
