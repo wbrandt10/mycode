@@ -1,0 +1,36 @@
+---
+- name: Playbook with tags
+  hosts: planetexpress
+  connection: ssh
+
+  vars:
+    cargo1: "prizes for claw crane"
+    cargo2: "popcorn"
+    cargo3: "pillows"
+
+  vars_files:
+    - /home/student/mycode/vars/tempvars.yml
+
+  tasks:
+  - name: "Deploy orders to the crew"
+    template:
+      src: /home/student/mycode/templates/orders.txt.j2
+      dest: ~/orders.txt
+    tags:
+    - orders
+
+  - name: "Deploy the cargo manifest"
+    template:
+      src: /home/student/mycode/templates/cargo_manifest.txt.j2
+      dest: ~/cargo_manifest.txt
+    tags:
+    - cargo
+    - ship_prep
+
+  - name: "Install navigation charts"
+    template:
+      src: /home/student/mycode/templates/navigation_charts.cfg.j2
+      dest: ~/navigation_charts.cfg
+    tags:
+    - nav
+    - ship_prep
