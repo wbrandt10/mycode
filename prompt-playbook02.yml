@@ -1,0 +1,16 @@
+---
+- name: How to prompt for variables
+  hosts: professors
+  gather_facts: false
+
+  vars_prompt:
+  - name: "ansible_ssh_pass"
+    prompt: "What is your ssh password?"
+    private: yes
+
+  tasks:
+  - name: connect to the professors and install figlet
+    yum:
+      name: figlet
+      state: present
+    become: true
