@@ -1,0 +1,19 @@
+---
+- name: Intro to T and F condtionals
+  hosts: localhost
+  gather_facts: false
+
+  vars:
+    bool_var: true
+    msg_var: "TIME TO PANIC!"
+
+  tasks:
+  - name: Runs when bool_var is true
+    debug:
+      msg: "{{ msg_var }}"
+    when: bool_var|bool
+
+  - name: runs when bool_var is false
+    debug:
+      msg: "DON'T PANIC!"
+    when: not bool_var|bool
