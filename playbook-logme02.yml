@@ -1,0 +1,17 @@
+---
+- name: Turn off logging at play level
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  no_log: true
+
+  tasks:
+    - name: Perform an API lookup (this may display sensitive data)
+      uri:
+        url: "https://api.le-systeme-solaire.net/rest/bodies/neso"
+        method: GET
+      register: results
+
+    - name: Debug task left in by a developer for debugging
+      debug:
+        var: results

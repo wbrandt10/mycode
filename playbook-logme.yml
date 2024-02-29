@@ -1,0 +1,15 @@
+---
+- name: Logging - Everything to standard out gets logged
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: First debug
+      debug:
+        msg: "The first message in the playbook."
+      no_log: true
+
+    - name: Second debug
+      debug:
+        msg: "The second message in the playbook."
