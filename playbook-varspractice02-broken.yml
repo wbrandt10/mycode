@@ -1,0 +1,13 @@
+---
+- name: Using a complex vars file
+  hosts: localhost
+  gather_facts: false
+
+  vars_files:
+    - ~/mycode/vars/titanvars.yml
+
+  tasks:
+  - name: debug with_dict
+    debug:
+      var: "{{ item }}"
+    loop: "{{ prefix_list }}"
