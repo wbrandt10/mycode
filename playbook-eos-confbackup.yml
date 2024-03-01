@@ -1,0 +1,37 @@
+---
+- name: Arista Config Saver
+  hosts: eosswitches
+  gather_facts: true
+
+  vars_files:
+    - ~/switch.creds
+
+  tasks:
+    - name: Arista Fact Collection
+      eos_facts:
+        gather_subset: all
+
+    - name: get the current date
+      command: date "+%Y-%m-%d"
+      register: result
+      vars:
+        ansible_connection: local
+
+    - name: set a variable to make date easier
+      set_fact:
+        date_now: "{{ result.stdout }}"
+
+    - name: Create dir to save switch config backups
+      file:
+        path: ~/mycode/backup/{{ date_now }}/
+        state: directory
+
+    - name: Arista Config Save
+      copy:
+        content: "{{ ansible_net_config }}"
+        dest: "~/mycode/backup/{{ date_now }}/{{ inventory_hostname }}-config.backup"
+
+    - name: Arista Archival Process
+      archive:
+        path: "~/mycode/backup/{{ date_now }}/{{ inventory_hostname }}-config.backup"
+        remove: true
