@@ -1,0 +1,16 @@
+---
+- name: Network Commands by Vendor
+  hosts: allvendors
+  gather_facts: false
+  vars_files:
+    - ~/switch.creds
+
+  tasks:
+    - name: Run an agnostic command
+      cli_command:
+        command: "{{ commandtoshowinterfaces }}"
+      register: results
+
+    - name: show results
+      debug:
+        var: results
