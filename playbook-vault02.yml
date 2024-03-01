@@ -1,0 +1,14 @@
+---
+- name: Extra vars vault
+  connection: local
+  hosts: localhost
+  gather_facts: false
+
+  vars_files:
+    - vars/oscreds.yml
+
+  tasks:
+    - name: print out encrypted vars
+      debug:
+        msg: "{{ imscloud }}"
+      no_log: true
